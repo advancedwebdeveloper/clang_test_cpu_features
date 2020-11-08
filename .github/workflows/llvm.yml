@@ -36,3 +36,5 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run the CPU feature extractor
         run: ./a.out
+      - name: Clonning LLVM master branch
+        run:  git clone https://github.com/llvm/llvm-project.git
