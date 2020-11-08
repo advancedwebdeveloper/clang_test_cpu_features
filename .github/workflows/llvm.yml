@@ -27,9 +27,9 @@ jobs:
         run: clang --version
 
       - name: Check our path
-        run: pwd && ls /usr/lib/llvm-9
+        run: pwd && ls /usr/lib/llvm-9/lib
       - name: Extracting llc's host target
-        run: llc-9 --version
+        run: llc-9 --version | grep CPU
       - name: Compile test tool, for retrieveing CPU features
         run: clang -I/usr/lib/llvm-9/include/ -I/usr/lib/llvm-9/include/llvm-c $GITHUB_WORKSPACE/llvm_cpu_features_investigation.cpp
 
