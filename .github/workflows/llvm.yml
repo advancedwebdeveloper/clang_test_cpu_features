@@ -26,6 +26,9 @@ jobs:
       - name: Get Clang's version
         run: clang --version
 
+      - name: Check our path
+        run: pwd && ls
+
       - name: Compile test tool, for retrieveing CPU features
         run: clang $GITHUB_WORKSPACE/llvm_cpu_features_investigation.cpp
 
