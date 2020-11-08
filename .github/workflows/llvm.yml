@@ -27,7 +27,7 @@ jobs:
         run: clang --version
 
       - name: Check our path
-        run: pwd && ls
+        run: pwd && llvm-config --includedir
 
       - name: Compile test tool, for retrieveing CPU features
         run: clang $GITHUB_WORKSPACE/llvm_cpu_features_investigation.cpp
