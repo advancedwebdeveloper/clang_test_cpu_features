@@ -39,8 +39,8 @@ jobs:
       - name: Trying to check if we could install Ninja
         run: sudo apt install ninja-build -y
          
-      - name: Checking the version of make, automake, autoconf and m4
-        run: make --version && m4 --version && autoconf --version && automake --version
+      - name: Checking the version of make, automake, autoconf, m4 and Ninja
+        run: make --version && m4 --version && autoconf --version && automake --version && ninja --version
       - name: Clonning LLVM master branch && gollvm related repos.
         run:  cd $GITHUB_WORKSPACE/clang_test_cpu_features && git clone https://github.com/llvm/llvm-project.git && cd llvm-project/llvm/tools && git clone https://go.googlesource.com/gollvm &&  cd gollvm && git clone https://go.googlesource.com/gofrontend && cd libgo && git clone https://github.com/libffi/libffi.git && git clone https://github.com/ianlancetaylor/libbacktrace.git
       - name: Compiling & linking gollvm
