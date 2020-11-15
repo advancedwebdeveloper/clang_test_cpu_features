@@ -37,7 +37,7 @@ jobs:
       - name: Run the CPU feature extractor
         run: ./a.out
       - name: Trying to check if we could install Ninja
-        run: apt search ninja
+        run: sudo apt install ninja-build -y
          
       - name: Checking the version of make, automake, autoconf and m4
         run: make --version && m4 --version && autoconf --version && automake --version
