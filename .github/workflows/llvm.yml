@@ -1,48 +1,29 @@
-# This is a basic workflow to help you get started with Actions
-
 name: LLVM
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
 on:
   create:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
       - name: Get Clang's version
         run: clang --version
-
       - name: Check our path
         run: pwd
       - name: Extracting llc's host target
         run: llc-9 --version | grep CPU
       - name: Compile test tool, for retrieveing CPU features
         run: clang -I/usr/lib/llvm-9/include/ -I/usr/lib/llvm-9/include/llvm-c -L/usr/lib/llvm-9/lib -lLLVM-9 -lstdc++ $GITHUB_WORKSPACE/llvm_cpu_features_investigation.cpp
-
-      # Runs a set of commands using the runners shell
       - name: Run the CPU feature extractor
         run: ./a.out
       - name: Trying to check if we could install Ninja
         run: sudo apt install ninja-build -y
-         
       - name: Checking the version of make, automake, autoconf, m4 and Ninja
         run: make --version && m4 --version && autoconf --version && automake --version && echo "Ninja's version is" && ninja --version
       - name: Clonning LLVM master branch && gollvm related repos.
         run:  cd $GITHUB_WORKSPACE/clang_test_cpu_features && git clone https://github.com/llvm/llvm-project.git && cd llvm-project/llvm/tools && git clone https://go.googlesource.com/gollvm &&  cd gollvm && git clone https://go.googlesource.com/gofrontend && cd libgo && git clone https://github.com/libffi/libffi.git && git clone https://github.com/ianlancetaylor/libbacktrace.git
       - name: Compiling & linking gollvm
         run: cd $GITHUB_WORKSPACE/clang_test_cpu_features && mkdir build_release && cd build_release && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD=X86 -G Ninja ../llvm-project/llvm && ninja -j16 gollvm && ninja GoBackendCoreTests && ./tools/gollvm/unittests/BackendCore/GoBackendCoreTests && sudo ninja install-gollvm
-      
