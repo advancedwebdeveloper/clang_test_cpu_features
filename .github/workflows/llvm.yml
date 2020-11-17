@@ -1,4 +1,4 @@
-name: LLVM
+name: gollvm
 on:
   create:
     branches: [ main ]
