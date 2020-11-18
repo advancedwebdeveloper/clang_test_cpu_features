@@ -28,6 +28,6 @@ jobs:
       - name: Compiling & linking gollvm
         run: cd $GITHUB_WORKSPACE/clang_test_cpu_features && mkdir build_release && cd build_release && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD=X86 -G Ninja ../llvm-project/llvm && ninja -j16 -v gollvm && ninja GoBackendCoreTests && ./tools/gollvm/unittests/BackendCore/GoBackendCoreTests && sudo ninja install-gollvm
       - name: Trace the contents of build.ninja file
-        run: cat $GITHUB_WORKSPACE/build.ninja
+        run: cat $GITHUB_WORKSPACE/build_release/build.ninja
       - name: Check llvm-godumpsec's flags
         run: $GITHUB_WORKSPACE/build_release/bin/llvm-godumpspec --help
