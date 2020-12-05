@@ -158,3 +158,27 @@ jobs:
         run:  cd $GITHUB_WORKSPACE/clang_test_cpu_features && git clone https://github.com/llvm/llvm-project.git && cd llvm-project/llvm/tools && git clone https://go.googlesource.com/gollvm &&  cd gollvm && git clone https://go.googlesource.com/gofrontend && cd libgo && git clone https://github.com/libffi/libffi.git && git clone https://github.com/ianlancetaylor/libbacktrace.git
       - name: Compiling & linking gollvm
         run: cd $GITHUB_WORKSPACE/clang_test_cpu_features && mkdir build_min && cd build_min && cmake -DCMAKE_BUILD_TYPE=MinSizeRel -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_C_COMPILER=clang-11 -DCMAKE_CXX_COMPILER=clang++-11 -G Ninja ../llvm-project/llvm && ninja -j16 gollvm && ninja GoBackendCoreTests && ./tools/gollvm/unittests/BackendCore/GoBackendCoreTests
+  clang11_build_amd_minsizerel: #The build with a minimal footprint?
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install AMD Optimizing C/C++ Compiler 
+        run: tar -xvf aocc-compiler-2.3.0.tar && cd aocc-compiler-2.3.0 && bash install.sh
+      - name: Check if we are using AMD's executable
+        run: clang --version
+      - name: Check our path
+        run: pwd
+   #  - name: Extracting llc's host target
+   #    run: llc-11 --version | grep CPU
+   #  - name: Compile test tool, for retrieveing CPU features
+   #    run: clang-11 -I/usr/lib/llvm-11/include/ -I/usr/lib/llvm-11/include/llvm-c -L/usr/lib/llvm-11/lib -lLLVM-11 -lstdc++ $GITHUB_WORKSPACE/llvm_cpu_features_investigation.cpp
+   #  - name: Run the CPU feature extractor
+   #    run: ./a.out
+      - name: Trying to check if we could install Ninja
+        run: sudo apt install ninja-build -y
+      - name: Checking the version of make, automake, autoconf, m4 and Ninja
+        run: make --version && m4 --version && autoconf --version && automake --version && echo "Ninja's version is" && ninja --version
+      - name: Clonning LLVM master branch && gollvm related repos.
+        run:  cd $GITHUB_WORKSPACE/clang_test_cpu_features && git clone https://github.com/llvm/llvm-project.git && cd llvm-project/llvm/tools && git clone https://go.googlesource.com/gollvm &&  cd gollvm && git clone https://go.googlesource.com/gofrontend && cd libgo && git clone https://github.com/libffi/libffi.git && git clone https://github.com/ianlancetaylor/libbacktrace.git
+      - name: Compiling & linking gollvm
+        run: cd $GITHUB_WORKSPACE/clang_test_cpu_features && mkdir build_min && cd build_min && cmake -DCMAKE_BUILD_TYPE=MinSizeRel -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -G Ninja ../llvm-project/llvm && ninja -j16 gollvm && ninja GoBackendCoreTests && ./tools/gollvm/unittests/BackendCore/GoBackendCoreTests
