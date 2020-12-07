@@ -163,7 +163,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install AMD Optimizing C/C++ Compiler 
-        run: tar -xvf aocc-compiler-2.3.0.tar && cd aocc-compiler-2.3.0 && bash install.sh && bash clang_test_cpu_features/setenv_AOCC.sh
+        run: tar -xvf aocc-compiler-2.3.0.tar && cd aocc-compiler-2.3.0 && bash install.sh && bash /home/runner/work/clang_test_cpu_features/clang_test_cpu_features/setenv_AOCC.sh
       - name: Check if we are using AMD's executable
         run: clang --version
       - name: Check our path
