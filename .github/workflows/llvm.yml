@@ -13,6 +13,8 @@ jobs:
         run: gcc --version
       - name: Check our path
         run: pwd
+      - name: Retrieve CPU model
+        run: cat /proc/cpuinfo
       - name: Trying to check if we could install Ninja
         run: sudo apt install ninja-build -y
       - name: Checking the version of make, automake, autoconf, m4 and Ninja
@@ -29,6 +31,8 @@ jobs:
         run: gcc --version
       - name: Check our path
         run: pwd
+      - name: Retrieve CPU model
+        run: cat /proc/cpuinfo
       - name: Trying to check if we could install Ninja
         run: sudo apt install ninja-build -y
       - name: Checking the version of make, automake, autoconf, m4 and Ninja
@@ -48,6 +52,8 @@ jobs:
         run: which clang-10
       - name: Check our path
         run: pwd
+      - name: Retrieve CPU model
+        run: cat /proc/cpuinfo
       - name: Extracting llc's host target
         run: llc-10 --version | grep CPU
       - name: Compile test tool, for retrieveing CPU features
@@ -72,6 +78,8 @@ jobs:
         run: which clang-10
       - name: Check our path
         run: pwd
+      - name: Retrieve CPU model
+        run: cat /proc/cpuinfo
       - name: Extracting llc's host target
         run: llc-10 --version | grep CPU
       - name: Compile test tool, for retrieveing CPU features
@@ -96,6 +104,8 @@ jobs:
         run: which clang-10
       - name: Check our path
         run: pwd
+      - name: Retrieve CPU model
+        run: cat /proc/cpuinfo
       - name: Extracting llc's host target
         run: llc-10 --version | grep CPU
       - name: Compile test tool, for retrieveing CPU features
@@ -120,6 +130,8 @@ jobs:
         run: which clang-11
       - name: Check our path
         run: pwd
+      - name: Retrieve CPU model
+        run: cat /proc/cpuinfo
       - name: Extracting llc's host target
         run: llc-11 --version | grep CPU
       - name: Compile test tool, for retrieveing CPU features
@@ -144,6 +156,8 @@ jobs:
         run: which clang-11
       - name: Check our path
         run: pwd
+      - name: Retrieve CPU model
+        run: cat /proc/cpuinfo
       - name: Extracting llc's host target
         run: llc-11 --version | grep CPU
       - name: Compile test tool, for retrieveing CPU features
@@ -168,12 +182,14 @@ jobs:
         run: clang --version
       - name: Check our path
         run: pwd
-   #  - name: Extracting llc's host target
-   #    run: llc-11 --version | grep CPU
-   #  - name: Compile test tool, for retrieveing CPU features
-   #    run: clang-11 -I/usr/lib/llvm-11/include/ -I/usr/lib/llvm-11/include/llvm-c -L/usr/lib/llvm-11/lib -lLLVM-11 -lstdc++ $GITHUB_WORKSPACE/llvm_cpu_features_investigation.cpp
-   #  - name: Run the CPU feature extractor
-   #    run: ./a.out
+      - name: Retrieve CPU model
+        run: cat /proc/cpuinfo
+      - name: Extracting llc's host target
+        run: llc-11 --version | grep CPU
+      - name: Compile test tool, for retrieveing CPU features
+        run: clang-11 -I/usr/lib/llvm-11/include/ -I/usr/lib/llvm-11/include/llvm-c -L/usr/lib/llvm-11/lib -lLLVM-11 -lstdc++ $GITHUB_WORKSPACE/llvm_cpu_features_investigation.cpp
+      - name: Run the CPU feature extractor
+        run: ./a.out
       - name: Trying to check if we could install Ninja
         run: sudo apt install ninja-build -y
       - name: Checking the version of make, automake, autoconf, m4 and Ninja
